@@ -33,6 +33,9 @@ public final class DeviceLinkIndex : NSObject {
             print("[Loki] Couldn't get device link index database extension.")
             return []
         }
+        var count: UInt = 0
+        ext.getNumberOfRows(&count, matching: query)
+        guard count != 0 else { return [] }
         var result: [DeviceLink] = []
         ext.enumerateKeysAndObjects(matching: query) { _, _, object, _ in
             guard let deviceLink = object as? DeviceLink else { return }
